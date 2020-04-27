@@ -17,27 +17,34 @@
  * Public Fetch request to the random user API. 
  */
 
-fetch('https://randomuser.me/api/?results=12')
+fetch('https://randomuser.me/api/?results=12&nat=us')
 .then(users => users.json())
 .then(data => {
     console.log(data);
     displayUsers(data)});
 
-function displayUsers (arrayOfUsers) {
+
+/***
+ * `displayUsers` function - displays the 12 random users on screen.
+ */
+
+function displayUsers (randomUsersObject) {
     let galleryContent = ``;
-    for (let i = 0; i < arrayOfUsers.results.length; i += 1) {
-        randomUsers.push(data.results[i]);
+    const arrayOfUserObjects = randomUsersObject.results;
+    for (let i = 0; i < arrayOfUserObjects.length; i += 1) {
+        randomUsers.push(arrayOfUserObjects[i]);
         galleryContent += `<div class="card">
                            <div class="card-img-container">
-                           <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+                           <img class="card-img" src="${arrayOfUserObjects[i].picture.large}" alt="profile picture">
                            </div>
                            <div class="card-info-container">
-                             <h3 id="name" class="card-name cap">first last</h3>
-                             <p class="card-text">email</p>
-                             <p class="card-text cap">city, state</p>
+                             <h3 id="name" class="card-name cap">${arrayOfUserObjects[i].name.first} ${arrayOfUserObjects[i].name.last}</h3>
+                             <p class="card-text">${arrayOfUserObjects[i].email}</p>
+                             <p class="card-text cap">${arrayOfUserObjects[i].location.city}, ${arrayOfUserObjects[i].location.state}</p>
                            </div>
-                        </div>`
+                           </div>`
     }
+    galleryContainer.innerHTML = galleryContent;
 }
 
 
