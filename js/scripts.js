@@ -85,13 +85,23 @@ function cardClickEvent(arrayOfUserObjects) {
     for (let i = 0; i < card.length; i += 1) {
         card[i].addEventListener('click', () => {
             displayModal(arrayOfUserObjects[i]);
+            // togglePrevious();
+            // toggleNext();
         });
     }
 }
 
 
-function toggleModal() {}
+function togglePrevious() {
+    const prevButton = document.getElementById('modal-prev');
+    console.log(prevButton);
+}
 
+
+function toggleNext() {
+    const nextButton = document.getElementById('modal-next');
+    console.log(nextButton);
+}
 
 function closeModal() {}
 
