@@ -10,6 +10,7 @@
  */
 
  let randomUsers = [];
+ const searchContainer = document.querySelector('.search-container');
  const galleryContainer = document.getElementById('gallery');
  const pageBody = document.querySelector('body');
 
@@ -49,6 +50,14 @@ function displayUsers(randomUsersObject) {
     return randomUsers;
 }
 
+function addSearchBar() {
+     searchContainer.innerHTML = 
+     `<form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>`;
+}
+addSearchBar();
 
 function displayModal(clickedUser) {
     let modalContent = ``;
@@ -83,6 +92,32 @@ function displayModal(clickedUser) {
     togglePrevious(randomUsers[clickedIndex - 1]);
     toggleNext(randomUsers[clickedIndex + 1]);
 }
+
+
+/***
+ * Search bar functionality.
+ */
+// const search = document.querySelector('#search-input');
+// const studentListItems = document.querySelectorAll('.student-item');
+// const studentNames = document.querySelectorAll('.student-details h3');
+// function searchList(searchInput, names, students) {
+//     let searchResults = [];
+ 
+//     for (let i = 0; i < students.length; i += 1) {
+//        students[i].style.display = 'none';
+//        if (searchInput.value.length !== 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+//           students[i].style.display = 'block';
+//           searchResults.push(students[i]);
+//           showPage(searchResults, 1);
+//        } else if (searchInput.value.length === 0) {
+//           students[i].style.display = 'block';
+//           searchResults.push(students[i]);
+//           showPage(studentListItems, 1);
+//        }
+//     }
+//     adjustPagination(searchResults);
+//     addNoResultAlert(searchResults);
+//   }
 
 
 function cardClickEvent(arrayOfUserObjects) {
