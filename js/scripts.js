@@ -49,10 +49,13 @@ function displayUsers(randomUsersObject) {
     return randomUsers;
 }
 
+
 function displayModal(clickedUser) {
     let modalContent = ``;
     const newDiv = document.createElement('div');
     newDiv.className = 'modal-container';
+    const clickedIndex = (randomUsers.indexOf(clickedUser));
+    console.log(clickedUser);
     const birthMonth = clickedUser.dob.date.slice(5,7);
     const birthday = clickedUser.dob.date.slice(8,10);
     const birthYear = clickedUser.dob.date.slice(0,4);
@@ -77,6 +80,8 @@ function displayModal(clickedUser) {
     </div>`;
     newDiv.innerHTML = modalContent;
     pageBody.appendChild(newDiv);
+    togglePrevious(randomUsers[clickedIndex - 1]);
+    toggleNext(randomUsers[clickedIndex + 1]);
 }
 
 
@@ -85,24 +90,30 @@ function cardClickEvent(arrayOfUserObjects) {
     for (let i = 0; i < card.length; i += 1) {
         card[i].addEventListener('click', () => {
             displayModal(arrayOfUserObjects[i]);
-            // togglePrevious();
-            // toggleNext();
         });
     }
 }
 
 
-function togglePrevious() {
+function togglePrevious(prevUserObject) {
+    const modalContainer = document.querySelector('.modal-container');
     const prevButton = document.getElementById('modal-prev');
-    console.log(prevButton);
+    prevButton.addEventListener('click', () => {
+        pageBody.removeChild(modalContainer);
+        displayModal(prevUserObject);
+    });
 }
 
 
-function toggleNext() {
+function toggleNext(nextUserObject) {
+    const modalContainer = document.querySelector('.modal-container');
     const nextButton = document.getElementById('modal-next');
-    console.log(nextButton);
+    nextButton.addEventListener('click', () => {
+        pageBody.removeChild(modalContainer);
+        displayModal(nextUserObject);
+    });
 }
 
-function closeModal() {}
+// function closeModal() {}
 
 
