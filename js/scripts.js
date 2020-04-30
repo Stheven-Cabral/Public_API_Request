@@ -23,8 +23,8 @@
 fetch('https://randomuser.me/api/?results=12&nat=us')
 .then(users => users.json())
 .then(data => {
-    storeUsers(data.results);
-    return displayUsers(data.results)})
+    displayUsers(data.results);
+    return storeUsers(data.results)})
 .then((data) => {cardClickEvent(data)});
 
 
@@ -36,6 +36,7 @@ function storeUsers(randomUsersObject) {
     for (let i = 0; i < randomUsersObject.length; i += 1) {
         randomUsers.push(randomUsersObject[i]);
     }
+    return randomUsers;
 }
 
 function displayUsers(randomUsersObject) {
@@ -54,7 +55,6 @@ function displayUsers(randomUsersObject) {
         </div>`;
     }
     galleryContainer.innerHTML = galleryContent;
-    return randomUsers;
 }
 
 function addSearchBar() {
@@ -104,21 +104,24 @@ function displayModal(clickedUser) {
 /***
  * Search bar functionality.
  */
-// make this into a function.
-const search = document.querySelector('#search-input');
-search.addEventListener('keyup', () => {
-    let filteredUsers = [];
-    galleryContainer.innerHTML = ``;
-    
-    for (let i = 0; i < randomUsers.length; i += 1) {
-        if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
+
+function searchUsers() {
+    const search = document.querySelector('#search-input');
+    search.addEventListener('keyup', () => {
+        let filteredUsers = [];
+        galleryContainer.innerHTML = ``;
+        for (let i = 0; i < randomUsers.length; i += 1) {
+            if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
             filteredUsers.push(randomUsers[i]);
+            }
         }
-    }
     displayUsers(filteredUsers);
     cardClickEvent(filteredUsers);
     // Add a new parameter at line 68 that accepts and array of Users, and replace randomUsers. Then add array arguments where displayModal is used.
-});
+    });
+};
+searchUsers();
+
 
 
 function cardClickEvent(arrayOfUserObjects) {
