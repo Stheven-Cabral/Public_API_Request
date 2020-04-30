@@ -10,6 +10,7 @@
  */
 
  let randomUsers = [];
+//  Random users needs to be changed. And move filtered users array as a global variable.
  const searchContainer = document.querySelector('.search-container');
  const galleryContainer = document.getElementById('gallery');
  const pageBody = document.querySelector('body');
@@ -103,6 +104,7 @@ function displayModal(clickedUser) {
 /***
  * Search bar functionality.
  */
+// make this into a function.
 const search = document.querySelector('#search-input');
 search.addEventListener('keyup', () => {
     let filteredUsers = [];
@@ -117,26 +119,6 @@ search.addEventListener('keyup', () => {
     cardClickEvent(filteredUsers);
     // Add a new parameter at line 68 that accepts and array of Users, and replace randomUsers. Then add array arguments where displayModal is used.
 });
-// const studentListItems = document.querySelectorAll('.student-item');
-// const studentNames = document.querySelectorAll('.student-details h3');
-// function searchList(searchInput, names, students) {
-//     let searchResults = [];
- 
-//     for (let i = 0; i < students.length; i += 1) {
-//        students[i].style.display = 'none';
-//        if (searchInput.value.length !== 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-//           students[i].style.display = 'block';
-//           searchResults.push(students[i]);
-//           showPage(searchResults, 1);
-//        } else if (searchInput.value.length === 0) {
-//           students[i].style.display = 'block';
-//           searchResults.push(students[i]);
-//           showPage(studentListItems, 1);
-//        }
-//     }
-//     adjustPagination(searchResults);
-//     addNoResultAlert(searchResults);
-//   }
 
 
 function cardClickEvent(arrayOfUserObjects) {
