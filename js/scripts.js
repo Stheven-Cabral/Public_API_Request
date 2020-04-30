@@ -21,7 +21,9 @@
 
 fetch('https://randomuser.me/api/?results=12&nat=us')
 .then(users => users.json())
-.then(data => {return displayUsers(data)})
+.then(data => {
+    storeUsers(data.results);
+    return displayUsers(data.results)})
 .then((data) => {cardClickEvent(data)});
 
 
@@ -29,20 +31,24 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
  * `displayUsers` function - displays the 12 random users on screen.
  */
 
+function storeUsers(randomUsersObject) {
+    for (let i = 0; i < randomUsersObject.length; i += 1) {
+        randomUsers.push(randomUsersObject[i]);
+    }
+}
+
 function displayUsers(randomUsersObject) {
     let galleryContent = ``;
-    const arrayOfUserObjects = randomUsersObject.results;
-    for (let i = 0; i < arrayOfUserObjects.length; i += 1) {
-        randomUsers.push(arrayOfUserObjects[i]);
+    for (let i = 0; i < randomUsersObject.length; i += 1) {
         galleryContent += 
         `<div class="card">
             <div class="card-img-container">
-                <img class="card-img" src="${arrayOfUserObjects[i].picture.large}" alt="profile picture">
+                <img class="card-img" src="${randomUsersObject[i].picture.large}" alt="profile picture">
             </div>
             <div class="card-info-container">
-                <h3 id="name" class="card-name cap">${arrayOfUserObjects[i].name.first} ${arrayOfUserObjects[i].name.last}</h3>
-                <p class="card-text">${arrayOfUserObjects[i].email}</p>
-                <p class="card-text cap">${arrayOfUserObjects[i].location.city}, ${arrayOfUserObjects[i].location.state}</p>
+                <h3 id="name" class="card-name cap">${randomUsersObject[i].name.first} ${randomUsersObject[i].name.last}</h3>
+                <p class="card-text">${randomUsersObject[i].email}</p>
+                <p class="card-text cap">${randomUsersObject[i].location.city}, ${randomUsersObject[i].location.state}</p>
             </div>
         </div>`;
     }
@@ -97,7 +103,20 @@ function displayModal(clickedUser) {
 /***
  * Search bar functionality.
  */
-// const search = document.querySelector('#search-input');
+const search = document.querySelector('#search-input');
+search.addEventListener('keyup', () => {
+    let filteredUsers = [];
+    galleryContainer.innerHTML = ``;
+    
+    for (let i = 0; i < randomUsers.length; i += 1) {
+        if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
+            filteredUsers.push(randomUsers[i]);
+        }
+    }
+    displayUsers(filteredUsers);
+    cardClickEvent(filteredUsers);
+    // Add a new parameter at line 68 that accepts and array of Users, and replace randomUsers. Then add array arguments where displayModal is used.
+});
 // const studentListItems = document.querySelectorAll('.student-item');
 // const studentNames = document.querySelectorAll('.student-details h3');
 // function searchList(searchInput, names, students) {
