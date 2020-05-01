@@ -1,6 +1,6 @@
 /***
  * FSJS Techdegree Project 4
- * Public API Request for an Employee Directory
+ * Public API Request
  * By Stheven Cabral
  */
 
@@ -89,7 +89,7 @@ function displayUsers(arrayOfUserObjects) {
 
 
 /***
- * `displayModal` function - displays a modal with more employee details when the corresponding employee card is clicked.
+ * `displayModal` function - displays a modal with more details when the corresponding employee (random user) card is clicked.
  * @param {object} clickedUser 
  */
 
@@ -163,6 +163,10 @@ function searchUsers() {
 searchUsers();
 
 
+/***
+ * `cardClickEvent` function - adds a click event listener to the user cards.
+ * @param {array} arrayOfUserObjects - accepts an array of user objects.
+ */
 
 function cardClickEvent(arrayOfUserObjects) {
     const card = document.querySelectorAll('.card');
@@ -174,6 +178,11 @@ function cardClickEvent(arrayOfUserObjects) {
 }
 
 
+/***
+ * `togglePrevious` function - displays the previous user modal.
+ * @param {object} prevUserObject - accepts a user object.
+ */
+
 function togglePrevious(prevUserObject) {
     const modalContainer = document.querySelector('.modal-container');
     const prevButton = document.getElementById('modal-prev');
@@ -184,6 +193,11 @@ function togglePrevious(prevUserObject) {
 }
 
 
+/***
+ * `toggleNext` function - displays the next user modal.
+ * @param {object} nextUserObject - accepts a user object.
+ */
+
 function toggleNext(nextUserObject) {
     const modalContainer = document.querySelector('.modal-container');
     const nextButton = document.getElementById('modal-next');
@@ -192,6 +206,11 @@ function toggleNext(nextUserObject) {
         displayModal(nextUserObject);
     });
 }
+
+
+/***
+ * `closeModal` function - closes the modal window when the 'X' close button or outside the modal is clicked.
+ */
 
 function closeModal() {
     const modalContainer = document.querySelector('.modal-container');    
