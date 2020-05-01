@@ -10,6 +10,8 @@
  */
 
  let randomUsers = [];
+ let filteredUsers = [];
+ console.log(filteredUsers);
 //  Random users needs to be changed. And move filtered users array as a global variable.
  const searchContainer = document.querySelector('.search-container');
  const galleryContainer = document.getElementById('gallery');
@@ -70,7 +72,6 @@ function displayModal(clickedUser) {
     let modalContent = ``;
     const newDiv = document.createElement('div');
     newDiv.className = 'modal-container';
-    const clickedIndex = (randomUsers.indexOf(clickedUser));
     console.log(clickedUser);
     const birthMonth = clickedUser.dob.date.slice(5,7);
     const birthday = clickedUser.dob.date.slice(8,10);
@@ -96,8 +97,16 @@ function displayModal(clickedUser) {
     </div>`;
     newDiv.innerHTML = modalContent;
     pageBody.appendChild(newDiv);
-    togglePrevious(randomUsers[clickedIndex - 1]);
-    toggleNext(randomUsers[clickedIndex + 1]);
+    if (filteredUsers.length > 0) {
+        const clickedIndex = (filteredUsers.indexOf(clickedUser));
+        if (clickedIndex !== 0) {togglePrevious(filteredUsers[clickedIndex - 1]);}
+        if (clickedIndex !== filteredUsers.length -1) {toggleNext(filteredUsers[clickedIndex + 1]);}
+    } else {
+        const clickedIndex = (randomUsers.indexOf(clickedUser));
+        if (clickedIndex !== 0) {togglePrevious(randomUsers[clickedIndex - 1]);}
+        if (clickedIndex !== randomUsers.length -1) {toggleNext(randomUsers[clickedIndex + 1]);}
+    }
+    closeModal(); 
 }
 
 
@@ -108,7 +117,8 @@ function displayModal(clickedUser) {
 function searchUsers() {
     const search = document.querySelector('#search-input');
     search.addEventListener('keyup', () => {
-        let filteredUsers = [];
+        filteredUsers = [];
+        console.log(filteredUsers);
         galleryContainer.innerHTML = ``;
         for (let i = 0; i < randomUsers.length; i += 1) {
             if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
@@ -153,6 +163,14 @@ function toggleNext(nextUserObject) {
     });
 }
 
-// function closeModal() {}
+function closeModal() {
+    const modalContainer = document.querySelector('.modal-container');    
+    modalContainer.addEventListener('click', (event) => {
+        console.log(event.target);
+        if (event.target.innerText === 'X' || event.target.classList.contains('modal-container')) {
+            modalContainer.parentNode.removeChild(modalContainer);
+        }
+    });
+}
 
 
