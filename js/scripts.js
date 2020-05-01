@@ -22,7 +22,7 @@
  
 
 /**
- * Public Fetch request to the random user API. 
+ * Public fetch request to the random user API. 
  * The data is parsed to JSON, then the `displayUsers` function is called on the data results.
  * The output of the `storeUsers` function is returned and is then passed into the `cardClickEvent` function.
  */
@@ -53,7 +53,7 @@ addSearchBar();
 /***
  * `storeUsers` function - pushes user objects to the `randomUsers` array.
  * @param {array} arrayOfUserObjects - accepts an array of objects.
- * @return {array} - Array of random users.
+ * @return {array} - returns the `randomUsers` array.
  */
 
 function storeUsers(arrayOfUserObjects) {
@@ -89,28 +89,32 @@ function displayUsers(arrayOfUserObjects) {
 
 
 /***
- * `displayModal` function - displays a modal with more details when the corresponding employee (random user) card is clicked.
- * @param {object} clickedUser 
+ * `displayModal` function - displays a modal with more details when the corresponding employee (random user) card is clicked to or viewed using the next or previos modal buttons.
+ * @param {object} userToView - accepts a single user object whose card was clicked or viewed using the previous or next modal buttons.
  */
 
-function displayModal(clickedUser) {
+function displayModal(userToView) {
+    /***
+     * The following code adds a picture as well as name, email, phone, location, and birthday details to the modal window.
+     * The modal window is appended to the `pageBody`.
+     */
     let modalContent = ``;
     const newDiv = document.createElement('div');
     newDiv.className = 'modal-container';
-    const birthMonth = clickedUser.dob.date.slice(5,7);
-    const birthday = clickedUser.dob.date.slice(8,10);
-    const birthYear = clickedUser.dob.date.slice(0,4);
+    const birthMonth = userToView.dob.date.slice(5,7);
+    const birthday = userToView.dob.date.slice(8,10);
+    const birthYear = userToView.dob.date.slice(0,4);
     modalContent += 
     `<div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
         <div class="modal-info-container">
-            <img class="modal-img" src="${clickedUser.picture.large}" alt="profile picture">
-            <h3 id="name" class="modal-name cap">${clickedUser.name.first} ${clickedUser.name.last}</h3>
-            <p class="modal-text">${clickedUser.email}</p>
-            <p class="modal-text cap">${clickedUser.location.city}</p>
+            <img class="modal-img" src="${userToView.picture.large}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">${userToView.name.first} ${userToView.name.last}</h3>
+            <p class="modal-text">${userToView.email}</p>
+            <p class="modal-text cap">${userToView.location.city}</p>
             <hr>
-            <p class="modal-text">${clickedUser.phone}</p>
-            <p class="modal-text">${clickedUser.location.street.number} ${clickedUser.location.street.nae}, ${clickedUser.location.city}, ${clickedUser.location.state} ${clickedUser.location.postcode}</p>
+            <p class="modal-text">${userToView.phone}</p>
+            <p class="modal-text">${userToView.location.street.number} ${userToView.location.street.nae}, ${userToView.location.city}, ${userToView.location.state} ${userToView.location.postcode}</p>
             <p class="modal-text">Birthday: ${birthMonth}/${birthday}/${birthYear}</p>
         </div>
     </div>
@@ -121,8 +125,14 @@ function displayModal(clickedUser) {
     newDiv.innerHTML = modalContent;
     pageBody.appendChild(newDiv);
 
+    /***
+     * The following code calls the `togglePrevious` and `toggleNext`. 
+     * If the search function was used, the `togglePrevious` and toggleNext` functions are passed in user objects from the `filteredUsers` array.
+     * If the search function was used, the `togglePrevious` and toggleNext` functions are passed in user objects from the `randomUsers` array.
+     * Conditions are also included that prevent use of the previous and next buttons when the end of the passed in array is reached.
+     */
     if (filteredUsers.length > 0) {
-        const clickedIndex = (filteredUsers.indexOf(clickedUser));
+        const clickedIndex = (filteredUsers.indexOf(userToView));
         if (clickedIndex !== 0) {
             togglePrevious(filteredUsers[clickedIndex - 1]);
         }
@@ -130,7 +140,7 @@ function displayModal(clickedUser) {
             toggleNext(filteredUsers[clickedIndex + 1]);
         }
     } else {
-        const clickedIndex = (randomUsers.indexOf(clickedUser));
+        const clickedIndex = (randomUsers.indexOf(userToView));
         if (clickedIndex !== 0) {
             togglePrevious(randomUsers[clickedIndex - 1]);
         }
@@ -143,7 +153,8 @@ function displayModal(clickedUser) {
 
 
 /***
- * Search bar functionality.
+ * `searchUsers` function - adds a keyup listener to the search input and pushes filtered results into the `filteredUsers` global variable.
+ * The `displayUsers` and `cardClickEvent` are called on the `filteredUsers`array.
  */
 
 function searchUsers() {
