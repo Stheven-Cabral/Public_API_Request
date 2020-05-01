@@ -36,48 +36,67 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
 
 
 /***
- * `displayUsers` function - displays the 12 random users on screen.
+ * `addSearchBar` function - adds a search bar to the page.
+ * Called the `addSearchBar` function.
  */
 
-function storeUsers(randomUsersObject) {
-    for (let i = 0; i < randomUsersObject.length; i += 1) {
-        randomUsers.push(randomUsersObject[i]);
+function addSearchBar() {
+    searchContainer.innerHTML = 
+    `<form action="#" method="get">
+       <input type="search" id="search-input" class="search-input" placeholder="Search...">
+       <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+   </form>`;
+}
+addSearchBar();
+
+
+/***
+ * `storeUsers` function - pushes user objects to the `randomUsers` array.
+ * @param {array} arrayOfUserObjects - accepts an array of objects.
+ * @return {array} - Array of random users.
+ */
+
+function storeUsers(arrayOfUserObjects) {
+    for (let i = 0; i < arrayOfUserObjects.length; i += 1) {
+        randomUsers.push(arrayOfUserObjects[i]);
     }
     return randomUsers;
 }
 
-function displayUsers(randomUsersObject) {
+
+/***
+ * `displayUsers` function - displays the fetched 12 random users on screen as employee cards.
+ * @param {array} arrayOfUserObjects - accepta an array of user objects.
+ */
+
+function displayUsers(arrayOfUserObjects) {
     let galleryContent = ``;
-    for (let i = 0; i < randomUsersObject.length; i += 1) {
+    for (let i = 0; i < arrayOfUserObjects.length; i += 1) {
         galleryContent += 
         `<div class="card">
             <div class="card-img-container">
-                <img class="card-img" src="${randomUsersObject[i].picture.large}" alt="profile picture">
+                <img class="card-img" src="${arrayOfUserObjects[i].picture.large}" alt="profile picture">
             </div>
             <div class="card-info-container">
-                <h3 id="name" class="card-name cap">${randomUsersObject[i].name.first} ${randomUsersObject[i].name.last}</h3>
-                <p class="card-text">${randomUsersObject[i].email}</p>
-                <p class="card-text cap">${randomUsersObject[i].location.city}, ${randomUsersObject[i].location.state}</p>
+                <h3 id="name" class="card-name cap">${arrayOfUserObjects[i].name.first} ${arrayOfUserObjects[i].name.last}</h3>
+                <p class="card-text">${arrayOfUserObjects[i].email}</p>
+                <p class="card-text cap">${arrayOfUserObjects[i].location.city}, ${arrayOfUserObjects[i].location.state}</p>
             </div>
         </div>`;
     }
     galleryContainer.innerHTML = galleryContent;
 }
 
-function addSearchBar() {
-     searchContainer.innerHTML = 
-     `<form action="#" method="get">
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>`;
-}
-addSearchBar();
+
+/***
+ * `displayModal` function - displays a modal with more employee details when the corresponding employee card is clicked.
+ * @param {object} clickedUser 
+ */
 
 function displayModal(clickedUser) {
     let modalContent = ``;
     const newDiv = document.createElement('div');
     newDiv.className = 'modal-container';
-    console.log(clickedUser);
     const birthMonth = clickedUser.dob.date.slice(5,7);
     const birthday = clickedUser.dob.date.slice(8,10);
     const birthYear = clickedUser.dob.date.slice(0,4);
@@ -95,21 +114,29 @@ function displayModal(clickedUser) {
             <p class="modal-text">Birthday: ${birthMonth}/${birthday}/${birthYear}</p>
         </div>
     </div>
-
     <div class="modal-btn-container">
         <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
         <button type="button" id="modal-next" class="modal-next btn">Next</button>
     </div>`;
     newDiv.innerHTML = modalContent;
     pageBody.appendChild(newDiv);
+
     if (filteredUsers.length > 0) {
         const clickedIndex = (filteredUsers.indexOf(clickedUser));
-        if (clickedIndex !== 0) {togglePrevious(filteredUsers[clickedIndex - 1]);}
-        if (clickedIndex !== filteredUsers.length -1) {toggleNext(filteredUsers[clickedIndex + 1]);}
+        if (clickedIndex !== 0) {
+            togglePrevious(filteredUsers[clickedIndex - 1]);
+        }
+        if (clickedIndex !== filteredUsers.length -1) {
+            toggleNext(filteredUsers[clickedIndex + 1]);
+        }
     } else {
         const clickedIndex = (randomUsers.indexOf(clickedUser));
-        if (clickedIndex !== 0) {togglePrevious(randomUsers[clickedIndex - 1]);}
-        if (clickedIndex !== randomUsers.length -1) {toggleNext(randomUsers[clickedIndex + 1]);}
+        if (clickedIndex !== 0) {
+            togglePrevious(randomUsers[clickedIndex - 1]);
+        }
+        if (clickedIndex !== randomUsers.length -1) {
+            toggleNext(randomUsers[clickedIndex + 1]);
+        }
     }
     closeModal(); 
 }
@@ -123,7 +150,6 @@ function searchUsers() {
     const search = document.querySelector('#search-input');
     search.addEventListener('keyup', () => {
         filteredUsers = [];
-        console.log(filteredUsers);
         galleryContainer.innerHTML = ``;
         for (let i = 0; i < randomUsers.length; i += 1) {
             if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
@@ -132,7 +158,6 @@ function searchUsers() {
         }
     displayUsers(filteredUsers);
     cardClickEvent(filteredUsers);
-    // Add a new parameter at line 68 that accepts and array of Users, and replace randomUsers. Then add array arguments where displayModal is used.
     });
 };
 searchUsers();
@@ -171,7 +196,6 @@ function toggleNext(nextUserObject) {
 function closeModal() {
     const modalContainer = document.querySelector('.modal-container');    
     modalContainer.addEventListener('click', (event) => {
-        console.log(event.target);
         if (event.target.innerText === 'X' || event.target.classList.contains('modal-container')) {
             modalContainer.parentNode.removeChild(modalContainer);
         }
