@@ -6,20 +6,25 @@
 
 
 /***
- * `randomUsers
+ * `pageBody` global variable captures the <body> element.
+ * `searchContainer` global variable captures the <div> container with the class `search-container`.
+ * `galleryContainer` global variable captures the <div> container with the class `gallery`.
+ * `randomUsers` global variable initiates an empty array that will hold 12 user objects from the random user API.
+ * `filteredUsers` global variables initiates an empty array that will hold search filtered user objects.
  */
 
- let randomUsers = [];
- let filteredUsers = [];
- console.log(filteredUsers);
-//  Random users needs to be changed. And move filtered users array as a global variable.
+ 
+ const pageBody = document.querySelector('body');
  const searchContainer = document.querySelector('.search-container');
  const galleryContainer = document.getElementById('gallery');
- const pageBody = document.querySelector('body');
-
+ let randomUsers = [];
+ let filteredUsers = [];
+ 
 
 /**
  * Public Fetch request to the random user API. 
+ * The data is parsed to JSON, then the `displayUsers` function is called on the data results.
+ * The output of the `storeUsers` function is returned and is then passed into the `cardClickEvent` function.
  */
 
 fetch('https://randomuser.me/api/?results=12&nat=us')
