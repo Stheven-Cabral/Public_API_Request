@@ -148,6 +148,10 @@ function displayModal(userToView) {
             toggleNext(randomUsers[clickedIndex + 1]);
         }
     }
+
+    /***
+     * Called the `closeModal` function so that the modal can be closed.
+     */
     closeModal(); 
 }
 
@@ -155,6 +159,7 @@ function displayModal(userToView) {
 /***
  * `searchUsers` function - adds a keyup listener to the search input and pushes filtered results into the `filteredUsers` global variable.
  * The `displayUsers` and `cardClickEvent` are called on the `filteredUsers`array.
+ * The `searchUsers` function is called.
  */
 
 function searchUsers() {
@@ -175,7 +180,7 @@ searchUsers();
 
 
 /***
- * `cardClickEvent` function - adds a click event listener to the user cards.
+ * `cardClickEvent` function - adds a click event listener to the user cards and calls the `displayModal` function on the clicked card.
  * @param {array} arrayOfUserObjects - accepts an array of user objects.
  */
 
