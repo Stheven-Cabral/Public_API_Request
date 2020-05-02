@@ -148,7 +148,6 @@ function displayModal(userToView) {
             toggleNext(randomUsers[clickedIndex + 1]);
         }
     }
-
     /***
      * Called the `closeModal` function so that the modal can be closed.
      */
@@ -163,8 +162,21 @@ function displayModal(userToView) {
  */
 
 function searchUsers() {
-    const search = document.querySelector('#search-input');
+    const search = document.getElementById('search-input');
+    const searchSubmit = document.getElementById('search-submit');
     search.addEventListener('keyup', () => {
+        filteredUsers = [];
+        galleryContainer.innerHTML = ``;
+        for (let i = 0; i < randomUsers.length; i += 1) {
+            if (randomUsers[i].name.first.toLowerCase().includes(search.value.toLowerCase()) || randomUsers[i].name.last.toLowerCase().includes(search.value.toLowerCase())) {
+            filteredUsers.push(randomUsers[i]);
+            }
+        }
+    displayUsers(filteredUsers);
+    cardClickEvent(filteredUsers);
+    });
+
+    searchSubmit.addEventListener('click', () => {
         filteredUsers = [];
         galleryContainer.innerHTML = ``;
         for (let i = 0; i < randomUsers.length; i += 1) {
