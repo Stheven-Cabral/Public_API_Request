@@ -114,7 +114,7 @@ function displayModal(userToView) {
             <p class="modal-text cap">${userToView.location.city}</p>
             <hr>
             <p class="modal-text">${userToView.phone}</p>
-            <p class="modal-text">${userToView.location.street.number} ${userToView.location.street.nae}, ${userToView.location.city}, ${userToView.location.state} ${userToView.location.postcode}</p>
+            <p class="modal-text">${userToView.location.street.number} ${userToView.location.street.name}, ${userToView.location.city}, ${userToView.location.state} ${userToView.location.postcode}</p>
             <p class="modal-text">Birthday: ${birthMonth}/${birthday}/${birthYear}</p>
         </div>
     </div>

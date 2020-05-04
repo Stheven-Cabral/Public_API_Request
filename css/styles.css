@@ -37,7 +37,7 @@ header h1 {
 
 .search-input {
     padding: 0.4rem 1rem;
-    border: 1px solid rgba(200, 200, 200, 0.9);
+    border: 1.5px solid rgba(200, 200, 200, 0.9);
     border-radius: 0.25rem 0 0 0.25rem ;
     max-width: 20rem;
     transition: .4s ease-out;
@@ -53,7 +53,7 @@ header h1 {
     height: 33px;
     background: rgba(245, 245, 245, 0.9);
     border-radius: 0 0.25rem 0.25rem 0;
-    border: 1px solid rgba(200, 200, 200, 0.9);
+    border: 1.5px solid rgba(200, 200, 200, 0.9);
     transition: .4s ease-out;
     outline: none;
 }
@@ -91,7 +91,7 @@ header h1 {
     padding: 10px;
     background: rgba(245, 245, 245, 0.9);
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: 1.5px solid rgba(50, 50, 50, 0.3);
     transition: .4s ease-out;
     overflow: hidden;
 }
@@ -155,7 +155,7 @@ header h1 {
     right: 15px;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 200, 250, 0.9);
     outline: none;
     border-radius: 0.25em;
     border: 1px solid rgba(50, 50, 50, 0.3);
@@ -169,6 +169,7 @@ header h1 {
 
 .modal-name {
     margin-bottom: 5px;
+    color: rgb(0, 160, 200);
 }
 
 .modal-text {
@@ -204,7 +205,7 @@ header h1 {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.9);
     padding: 0.75em 1.5em;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 200, 250, 0.9);
     border-radius: 0.35em;
     transition: .4s ease-out;
     outline: none;
