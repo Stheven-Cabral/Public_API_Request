@@ -164,7 +164,7 @@ function displayModal(userToView) {
 function searchUsers() {
     const search = document.getElementById('search-input');
     const searchSubmit = document.getElementById('search-submit');
-    search.addEventListener('keyup', () => {
+    search.addEventListener('input', () => {
         filteredUsers = [];
         galleryContainer.innerHTML = ``;
         for (let i = 0; i < randomUsers.length; i += 1) {
